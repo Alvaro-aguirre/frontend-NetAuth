@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 
 namespace frontendnet.Models
 {
@@ -28,6 +29,7 @@ namespace frontendnet.Models
         [Display(Name = "Eliminable")]
         public bool Protegida { get; set; } = false;
 
+        [JsonPropertyName("categoria")]
         public ICollection<Categoria>? Categorias { get; set; }
     }
 }

@@ -303,7 +303,4 @@ public class ProductosController(ProductosClientService productos,
         var listado = await archivos.GetAsync();
         ViewBag.Archivo = new SelectList(listado, "ArchivoId", "Nombre", itemSeleccionado);
     }
-
-
-
 }
