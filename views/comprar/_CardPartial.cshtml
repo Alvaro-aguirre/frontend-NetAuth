@@ -22,6 +22,11 @@
         </p>
     </div>
     <div class="card-footer">
-        <a class="btn btn-primary btn-sm" href="#" role="button">Comprar</a>
+        <form asp-controller="Carrito" asp-action="Agregar" method="post">
+            <input type="hidden" name="id" value="@Model.ProductoId" />
+            <button type="submit" class="btn btn-success btn-sm">
+                <i class="bi bi-cart-plus"></i> Agregar al carrito
+            </button>
+        </form>
     </div>
 </div>

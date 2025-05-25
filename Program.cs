@@ -55,12 +55,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
 
+builder.Services.AddSession();
+
 var app = builder.Build();
 // Agregamos un middleware para el manejo de errores
 app.UseExceptionHandler("/Home/Error");
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

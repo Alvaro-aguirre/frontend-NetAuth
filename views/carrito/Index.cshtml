@@ -1,17 +1,65 @@
+@model List<Carrito>
 @{
     ViewData["Title"] = "Carrito de compras";
     ViewData["SubTitle"] = "Listado";
+        var total = Model.Sum(item => item.Precio * item.Cantidad);
 }
+
 <h2 class="text-center mb-3">@ViewData["Title"] <small class="text-muted fs-5">@ViewData["SubTitle"]</small></h2>
 
 <div class="row small mb-3">
     <div class="col text-end">
-        Mostrando 0 elementos
+    Mostrando @Model.Count() elemento(s)
     </div>
 </div>
 
-<div class="mt-5">
-    <div class="alert alert-warning" role="alert">
-        No se han encontrado elementos. Inténtelo de nuevo más tarde.
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Titulo</td>
+                <td>@item.Precio</td>
+                <td>
+                    <form asp-action="Actualizar" asp-controller="Carrito" method="post" class="d-flex">
+                        <input type="hidden" name="id" value="@item.ProductoId" />
+                        <input type="number" name="cantidad" value="@item.Cantidad" min="1" class="form-control form-control-sm me-1" style="width: 80px;" />
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">↻</button>
+                    </form>
+                </td>
+                <td>@(item.Precio * item.Cantidad)</td>
+                <td>
+                    <form asp-action="Eliminar" asp-controller="Carrito" method="post">
+                        <input type="hidden" name="id" value="@item.ProductoId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+            <tr>
+                <td colspan="3" class="text-end fw-bold">Total:</td>
+                <td class="fw-bold">@total.ToString("C")</td>
+                <td></td>
+            </tr>
+    </tfoot>
+</table>
+
+
+    <div class="text-end">
+        <form asp-action="Confirmar" asp-controller="Carrito" method="post">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle"></i> Realizar compra
+            </button>
+        </form>
     </div>
-</div>
