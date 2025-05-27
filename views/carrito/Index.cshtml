@@ -7,6 +7,11 @@
 
 <h2 class="text-center mb-3">@ViewData["Title"] <small class="text-muted fs-5">@ViewData["SubTitle"]</small></h2>
 
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-info text-center">@TempData["Mensaje"]</div>
+}
+
 <div class="row small mb-3">
     <div class="col text-end">
     Mostrando @Model.Count() elemento(s)
@@ -32,7 +37,7 @@
                 <td>
                     <form asp-action="Actualizar" asp-controller="Carrito" method="post" class="d-flex">
                         <input type="hidden" name="id" value="@item.ProductoId" />
-                        <input type="number" name="cantidad" value="@item.Cantidad" min="1" class="form-control form-control-sm me-1" style="width: 80px;" />
+                        <input type="number" name="cantidad" value="@item.Cantidad" min="1" max="100" class="form-control form-control-sm me-1" style="width: 80px;" />
                         <button type="submit" class="btn btn-outline-secondary btn-sm">↻</button>
                     </form>
                 </td>
@@ -57,9 +62,9 @@
 
 
     <div class="text-end">
-        <form asp-action="Confirmar" asp-controller="Carrito" method="post">
+                <form asp-action="ConfirmarPedido" method="post">
             <button type="submit" class="btn btn-success">
-                <i class="bi bi-check-circle"></i> Realizar compra
+                <i class="bi bi-check-circle"></i> Confirmar pedido
             </button>
         </form>
     </div>

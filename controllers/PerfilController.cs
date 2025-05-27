@@ -22,7 +22,8 @@ public class PerfilController(PerfilClientService perfil) : Controller
                 Email = User.FindFirstValue(ClaimTypes.Name)!,
                 Nombre = User.FindFirstValue(ClaimTypes.GivenName)!,
                 Rol = User.FindFirstValue(ClaimTypes.Role)!,
-                Jwt = User.FindFirstValue("jwt")!
+                Jwt = User.FindFirstValue("jwt")!,
+                Id = User.FindFirstValue("id")!
             };
         }
         catch (HttpRequestException ex)

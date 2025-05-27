@@ -33,7 +33,8 @@ public class AuthController(AuthClientService auth) : Controller
                 new(ClaimTypes.Name, token.Email),
                 new(ClaimTypes.GivenName, token.Nombre),
                 new("jwt", token.Jwt),
-                new(ClaimTypes.Role, token.Rol),
+                new("id", token.Id),
+                new(ClaimTypes.Role, token.Rol)
             };
 
                 auth.IniciaSesionAsync(claims);

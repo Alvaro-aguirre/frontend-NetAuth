@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace frontendnet;
 
 [Authorize(Roles = "Usuario")]
-public class CarritoController(ProductosClientService productos) : Controller
+public class CarritoController(ProductosClientService productos,
+                               PedidosClientService pedidos,
+                               IConfiguration configuration) : Controller
 {
     private const string SessionKey = "Carrito";
 
@@ -87,5 +89,50 @@ public class CarritoController(ProductosClientService productos) : Controller
     {
         HttpContext.Session.SetString(SessionKey, JsonSerializer.Serialize(carrito));
     }
+
+
+[HttpPost]
+public async Task<IActionResult> ConfirmarPedido()
+{
+    var carrito = ObtenerCarrito();
+    if (carrito.Count == 0)
+    {
+        TempData["Mensaje"] = "El carrito está vacío.";
+        return RedirectToAction("Index");
+    }
+
+    var usuarioIdStr = User.FindFirst("id")?.Value;
+    if (string.IsNullOrEmpty(usuarioIdStr))
+    {
+        TempData["Mensaje"] = "Sesión inválida.";
+        return RedirectToAction("Index");
+    }
+
+    var pedido = new Pedido
+    {
+        usuarioid = usuarioIdStr,
+        productos = carrito.Select(p => new PedidoProducto
+        {
+            productoid = (int)p.ProductoId,
+            cantidad = p.Cantidad
+        }).ToList()
+    };
+
+    try
+    {
+        await pedidos.PostAsync(pedido);
+
+        // Vaciar el carrito sin romper la sesión
+        HttpContext.Session.SetString(SessionKey, "[]");
+
+        TempData["Mensaje"] = "¡Pedido realizado con éxito!";
+    }
+    catch
+    {
+        TempData["Mensaje"] = "Error al enviar el pedido.";
+    }
+
+    return RedirectToAction("Index");
 }
 
+}
