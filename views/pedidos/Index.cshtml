@@ -1,0 +1,15 @@
+@model List<Pedido>
+
+<h2>Pedidos</h2>
+
+@foreach (var pedido in Model)
+{
+    <div class="card mb-3">
+        <div class="card-header">
+            Pedido de usuario @pedido.usuarioid
+        </div>
+        <div class="card-body">
+            @pedido.productos.Count productos (sin detalles)
+        </div>
+    </div>
+}

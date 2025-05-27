@@ -10,4 +10,9 @@ public class PedidosClientService(HttpClient client)
         var response = await client.PostAsJsonAsync("api/pedidos", pedido);
         response.EnsureSuccessStatusCode();
     }
+
+    public async Task<List<Pedido>?> GetAsync(string? search)
+    {
+        return await client.GetFromJsonAsync<List<Pedido>>($"api/pedidos?s={search}");
+    }
 }
