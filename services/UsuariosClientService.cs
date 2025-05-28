@@ -20,6 +20,12 @@ public class UsuariosClientService(HttpClient client)
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task PostCompradorAsync(UsuarioPwd usuario)
+    {
+        var response = await client.PostAsJsonAsync($"api/usuarios/compradores", usuario);
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task PutAsync(Usuario usuario)
     {
         var response = await client.PutAsJsonAsync($"api/usuarios/{usuario.Email}", usuario);

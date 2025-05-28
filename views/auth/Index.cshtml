@@ -3,6 +3,12 @@
     ViewData["Title"] = "Inicio de sesión";
 }
 
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["Mensaje"]</div>
+}
+
+
 <form asp-action="Index">
     <div class="card mx-auto" style="max-width: 500px;">
         <div class="card-body">
@@ -25,7 +31,7 @@
 
             <p class="card-text text-center">Ingrese sus credenciales para poder disfrutar de todo el contenido de la plataforma.</p>
             <p class="card-text small text-end">
-                <a asp-controller="Home" asp-action="Index" class="link-primary text-decoration-none">Crear cuenta</a>
+                <a asp-controller="Registro" asp-action="Crear" class="link-primary text-decoration-none">Crear cuenta</a>
             </p>
         </div>
         <div class="card-footer text-center">

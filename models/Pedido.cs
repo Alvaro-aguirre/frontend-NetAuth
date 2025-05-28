@@ -10,4 +10,6 @@ public class PedidoProducto
 {
     public int productoid { get; set; }
     public int cantidad { get; set; }
+
+    public Producto? producto { get; set; }
 }
