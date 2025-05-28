@@ -14,10 +14,10 @@ public class PedidosController(PedidosClientService pedidos,
 {
     public async Task<IActionResult> Index(string? s)
     {
-        List<Pedido> lista = [];
+        List<PedidoJson> lista = [];
         try
         {
-            lista = await pedidos.GetAsync(s);
+            lista = await pedidos.GetAsync(s); // este GetAsync ahora devuelve List<PedidoJson>
         }
         catch (HttpRequestException ex)
         {
@@ -26,25 +26,26 @@ public class PedidosController(PedidosClientService pedidos,
         }
 
         ViewBag.Url = configuration["UrlWebAPI"];
-        return View(lista);
+        return View(lista); // lista es List<PedidoJson>
     }
 
-    
-/*
-        public async Task<IActionResult> Detalle(int id)
-        {
-            Pedido? item = null;
-            try
+
+
+    /*
+            public async Task<IActionResult> Detalle(int id)
             {
-                item = await pedidos.GetAsync(id);
-                if (item == null) return NotFound();
-            }
-            catch (HttpRequestException ex)
-            {
-                if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                    return RedirectToAction("Salir", "Auth");
-            }
-            ViewBag.Url = configuration["UrlWebAPI"];
-            return View(item);
-        }*/
+                Pedido? item = null;
+                try
+                {
+                    item = await pedidos.GetAsync(id);
+                    if (item == null) return NotFound();
+                }
+                catch (HttpRequestException ex)
+                {
+                    if (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                        return RedirectToAction("Salir", "Auth");
+                }
+                ViewBag.Url = configuration["UrlWebAPI"];
+                return View(item);
+            }*/
 }

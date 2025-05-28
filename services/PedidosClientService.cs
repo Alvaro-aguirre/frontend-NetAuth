@@ -11,8 +11,9 @@ public class PedidosClientService(HttpClient client)
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<List<Pedido>?> GetAsync(string? search)
-    {
-        return await client.GetFromJsonAsync<List<Pedido>>($"api/pedidos?s={search}");
-    }
+    public async Task<List<PedidoJson>?> GetAsync(string? search)
+{
+    return await client.GetFromJsonAsync<List<PedidoJson>>($"api/pedidos?s={search}");
+}
+
 }
